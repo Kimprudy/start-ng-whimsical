@@ -1,0 +1,156 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap');
+
+:root{
+  font-family:'DM Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+  color:#17253b;
+  background:#f5f8fc;
+  font-synthesis:none;
+  text-rendering:optimizeLegibility;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  font-optical-sizing:auto;
+  font-weight:400;
+  font-size:14px;
+  font-feature-settings:'ss01' on;
+  --blue:#2465d8;
+  --blue-dark:#174cae;
+  --blue-pale:#edf4ff;
+  --ink:#17253b;
+  --muted:#718096;
+  --line:#e5ebf3;
+  --surface:#fff;
+  --accent-orange:#ff6b35;
+  --accent-orange-light:#ff8f6b;
+  --accent-teal:#38bdf8;
+  --accent-teal-light:#67e8f9;
+}
+
+/* Whimsical floating elements */
+@keyframes float {
+  0%, 100% { transform: translateY(0) translateX(0); }
+  50% { transform: translateY(-20px) translateX(15px); }
+}
+
+@keyframes float-slow {
+  0%, 100% { transform: translateY(0) translateX(0); }
+  50% { transform: translateY(-30px) translateX(-15px); }
+}
+
+@keyframes float-tiny {
+  0%, 100% { transform: translateY(0) translateX(0); }
+  50% { transform: translateY(-10px) translateX(5px); }
+}
+
+@keyframes pulse-slow {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+@keyframes spin-slow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.bubble {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  filter: opacity(0.8);
+  animation: float 6s ease-in-out infinite;
+}
+
+.bubble-small {
+  width: 20px;
+  height: 20px;
+  animation-duration: 8s;
+}
+
+.bubble-medium {
+  width: 35px;
+  height: 35px;
+  animation-duration: 7s;
+}
+
+.bubble-large {
+  width: 50px;
+  height: 50px;
+  animation-duration: 5s;
+}
+
+.bubble-xsmall {
+  width: 10px;
+  height: 10px;
+  animation-duration: 10s;
+}
+
+/* Different colors for bubbles */
+.bubble-blue { background: var(--blue-pale); }
+.bubble-orange { background: var(--accent-orange-light); }
+.bubble-teal { background: var(--accent-teal-light); }
+.bubble-purple { background: #e8d4fc; }
+.bubble-pink { background: #fbcfe8; }
+
+.sparkle {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background: white;
+  border-radius: 50%;
+  pointer-events: none;
+  animation: pulse-slow 4s ease-in-out infinite;
+}
+
+/* Reduced motion - disable animations */
+@media (prefers-reduced-motion: reduce) {
+  .bubble,
+  .sparkle {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+@media (max-width: 1100px) {
+  .main-column { margin-left: 0; }
+  .sidebar { width: 100%; position: relative; height: auto; }
+  .topbar { justify-content: space-between; }
+  .page-content { padding: 20px; }
+}
+
+@media (max-width: 768px) {
+  .sidebar {
+    transform: translateX(0);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  }
+  .main-column { margin-left: 0; }
+  .nav-scrim { display: block; }
+  .mobile-menu { display: block; }
+  .page-header { flex-direction: column; gap: 12px; }
+  .page-header h1 { font-size: 22px; }
+  .page-header p { font-size: 10px; }
+  .metric-grid { grid-template-columns: repeat(2, 1fr); }
+  .console-grid { grid-template-columns: 1fr; }
+  .inbox-layout { grid-template-columns: 1fr; }
+  .inbox-layout > .surface { min-height: 0; }
+  .inbox-list-panel { display: grid; grid-template-columns: 1fr 1fr; }
+  .activity-layout { grid-template-columns: 1fr; }
+  .issue-focus-layout { grid-template-columns: 1fr; }
+  .issue-focus-intro { display: none; }
+}
+
+@media (max-width: 520px) {
+  .topbar { height: 55px; flex-basis: 55px; }
+  .topbar-breadcrumb { gap: 6px; font-size: 9px; }
+  .demo-indicator { font-size: 0; }
+  .demo-indicator i { width: 8px; height: 8px; }
+  .help-button { display: none; }
+  .page-content { padding: 18px 13px 26px; }
+  .page-header { flex-direction: column; gap: 12px; margin-bottom: 14px; }
+  .page-header h1 { font-size: 20px; }
+  .page-header p { font-size: 9px; }
+  .page-header > .button, .page-header > .period-chip, .page-header > .activity-counter { align-self: flex-start; }
+  .metric-grid { gap: 6px; }
+  .metric-card { padding: 10px 8px; grid-template-columns: 26px 1fr; }
+  .metric-label { font-size: 7px; }
+  .metric-value { font-size: 17px; }
+  .metric-note { font-size: 7px; }
+}
