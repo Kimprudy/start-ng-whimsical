@@ -136,7 +136,8 @@ function Bubble({ x, y, size, color, type }: BubbleProps) {
 
 function HeroSection() {
   return (
-    <section className="hero">
+    <section className="hero" style={{ position: 'relative', minHeight: '60vh', overflow: 'hidden' }}>
+      <div className="floating-decor" style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', pointerEvents: 'none' }} />
       <p className="eyebrow">Big imagination. Played everywhere.</p>
       <h1>Good vibes.<br /><mark>Good games.</mark></h1>
       <p className="lead">Games made by builders in the community. Each one lives at its own start.ng address. Pick one and play right in your browser.</p>
@@ -149,7 +150,7 @@ function HeroSection() {
 
 function GamesSection() {
   return (
-    <section id="games" className="games">
+    <section id="games" className="games" style={{ position: 'relative', overflow: 'hidden' }}>
       <div className="section-head">
         <div>
           <h2>Games from the community</h2>
@@ -158,12 +159,12 @@ function GamesSection() {
       <div className="see-all">
         <a className="btn" href="#all-games">See all 188 games →</a>
       </div>
-      <div className="games-grid">
+      <div className="games-grid" style={{ gap: '1.5rem' }}>
         {gamesData.map((game) => (
           <div
             key={game.id}
             className="game-card"
-            style={{ transition: 'transform 0.2s ease' }}
+            style={{ transition: 'transform 0.3s cubic-bezier(0.4, 0, 0.2, 1)', position: 'relative', overflow: 'hidden' }}
           >
             <div
               className="game-card-image"
@@ -177,6 +178,8 @@ function GamesSection() {
                 color: 'var(--ink)',
                 fontSize: '12px',
                 fontWeight: '600',
+                position: 'relative',
+                overflow: 'hidden'
               }}
             >
               {game.name.substring(0, 10)}
@@ -185,8 +188,10 @@ function GamesSection() {
               <h3 className="game-card-title">{game.name}</h3>
               <p className="game-card-dev">{game.developer}</p>
             </div>
+            <div style={{ position: 'absolute', top: -10, left: -10, width: 20, height: 20, background: 'var(--bubble-orange)', borderRadius: '50%', opacity: 0.5, animation: 'float-tiny 10s ease-in-out infinite' }} />
           </div>
         ))}
+        <div style={{ position: 'absolute', bottom: -40, right: -20, width: 60, height: 60, background: 'var(--bubble-teal)', borderRadius: '60% 40% 30% 70% / 60% 30% 70% 40%', opacity: 0.4, animation: 'float-slow 15s ease-in-out infinite' }} />
       </div>
     </section>
   );
