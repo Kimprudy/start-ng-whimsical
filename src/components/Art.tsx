@@ -145,33 +145,3 @@ export function PressPlay() {
     </span>
   );
 }
-
-// A tiny platformer level: Pip jumps, bonks the power-up block, a coin pops
-// out and the score goes up, counted off the jump animation itself.
-export function PlayLevel() {
-  const [score, setScore] = useState(0);
-  return (
-    <div className="level" aria-hidden="true">
-      <div className="level-stage">
-        <span className="power-block">
-          <svg viewBox="0 0 40 40"><rect x="2" y="2" width="36" height="36" rx="7" fill="#d8fd71" stroke="#292a23" strokeWidth="3" /><path d="M15 11.5v17c0 1.2 1.3 1.9 2.3 1.3l13-8.5c.9-.6.9-2 0-2.6l-13-8.5c-1-.6-2.3.1-2.3 1.3z" fill="#292a23" /></svg>
-        </span>
-        <span className="pop-coin" />
-        <span className="pop-plus">+1</span>
-        <span className="level-jumper" onAnimationIteration={() => setScore((n) => n + 1)}>
-          <Pip mood="happy" className="level-pip" />
-        </span>
-        <span className="level-shadow" />
-      </div>
-      <span className="level-brick level-brick--a" />
-      <span className="level-brick level-brick--b" />
-      <span className="level-coin level-coin--a" />
-      <span className="level-coin level-coin--b" />
-      <span className="score">SCORE <b>{String(score).padStart(4, '0')}</b></span>
-      <span className="handnote level-note">every jump counts!</span>
-      <svg className="level-ground" viewBox="0 0 1200 12" preserveAspectRatio="none">
-        <path d="M0 6 C200 2 400 10 600 6 S1000 2 1200 6" fill="none" stroke="#292a23" strokeWidth="2.5" strokeLinecap="round" strokeDasharray="18 12" />
-      </svg>
-    </div>
-  );
-}

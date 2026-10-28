@@ -1,9 +1,9 @@
-import { useEffect, type CSSProperties } from 'react';
+import { useEffect, useRef, type CSSProperties, type RefObject } from 'react';
 import {
   SITE, gameAddress, gameCover, gameHref, gameTitle, indieCover, indieHost, indieHref, isHangout,
   useChallenge, useCountdown, useGames, useIndie, useTournament, type Game,
 } from './api';
-import { Cover, Pip, PlayLevel, PressPlay, Sparkle, Squiggle } from './components/Art';
+import { Cover, Pip, PressPlay, Sparkle, Squiggle } from './components/Art';
 
 const categories = [
   { slug: 'endless-runners', name: 'Endless runners', count: 38 },
@@ -67,20 +67,66 @@ function NavBar() {
   );
 }
 
+// The "oo" in each "Good" is a pair of googly eyes. Pupils follow the pointer;
+// with no pointer around (touch screens, or a still mouse) they look about on
+// their own. Pupils move via CSS variables, so React never re-renders.
+function useGooglyEyes(root: RefObject<HTMLElement | null>) {
+  useEffect(() => {
+    const eyes = [...(root.current?.querySelectorAll<HTMLElement>('.eye') ?? [])];
+    if (!eyes.length) return;
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let frame = 0;
+    let idleTimer = 0;
+    const lookAt = (x: number, y: number) => {
+      cancelAnimationFrame(frame);
+      frame = requestAnimationFrame(() => {
+        for (const eye of eyes) {
+          const r = eye.getBoundingClientRect();
+          const dx = x - (r.left + r.width / 2);
+          const dy = y - (r.top + r.height / 2);
+          const reach = Math.min(1, Math.hypot(dx, dy) / 120);
+          const angle = Math.atan2(dy, dx);
+          eye.style.setProperty('--px', (Math.cos(angle) * reach).toFixed(3));
+          eye.style.setProperty('--py', (Math.sin(angle) * reach).toFixed(3));
+        }
+      });
+    };
+    const wander = () => {
+      const r = root.current?.getBoundingClientRect();
+      if (r) lookAt(r.left + Math.random() * r.width, r.top + (Math.random() - .3) * r.height * 1.6);
+      idleTimer = window.setTimeout(wander, 1800 + Math.random() * 1600);
+    };
+    const onMove = (e: PointerEvent) => {
+      window.clearTimeout(idleTimer);
+      lookAt(e.clientX, e.clientY);
+      if (!reduce) idleTimer = window.setTimeout(wander, 4000);
+    };
+    window.addEventListener('pointermove', onMove, { passive: true });
+    if (!reduce) idleTimer = window.setTimeout(wander, 1200);
+    return () => {
+      window.removeEventListener('pointermove', onMove);
+      window.clearTimeout(idleTimer);
+      cancelAnimationFrame(frame);
+    };
+  }, [root]);
+}
+
+const Eye = () => <span className="eye"><span className="pupil" /></span>;
+
 function Hero() {
+  const title = useRef<HTMLHeadingElement>(null);
+  useGooglyEyes(title);
   return (
     <section className="hero">
       <div className="hero-doodles" aria-hidden="true">
         <PressPlay />
-        <div className="orbit"><span className="orbit-moon" /></div>
         <Sparkle className="hero-spark hero-spark--a" />
-        <Sparkle className="hero-spark hero-spark--b" />
       </div>
       <p className="kicker">Big imagination. Played everywhere.</p>
-      <h1 aria-label="Good vibes. Good games.">
+      <h1 ref={title} aria-label="Good vibes. Good games.">
         <span aria-hidden="true">
-          Good vib<span className="e-pop e-pop--a">e</span>s.<br />
-          <span className="swash">Good gam<span className="e-pop e-pop--b">e</span>s.
+          <span className="face">G<Eye /><Eye />d</span> vib<span className="e-pop e-pop--a">e</span>s.<br />
+          <span className="swash"><span className="face face--b">G<Eye /><Eye />d</span> gam<span className="e-pop e-pop--b">e</span>s.
             <svg className="swash-line" viewBox="0 0 420 34" preserveAspectRatio="none"><path d="M6 22 C90 8 180 30 260 16 S380 10 414 18" fill="none" stroke="#d8fd71" strokeWidth="16" strokeLinecap="round" /></svg>
           </span>
         </span>
@@ -95,7 +141,6 @@ function Hero() {
         <a className="btn btn--paper" href={SITE}>Create free account</a>
       </div>
       <p className="handnote hero-note">psst… every game is free <span aria-hidden="true">↺</span></p>
-      <PlayLevel />
     </section>
   );
 }

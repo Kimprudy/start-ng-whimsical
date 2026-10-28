@@ -166,7 +166,7 @@ code { font-family: var(--mono); font-size: .92em; }
 .nav nav a:hover::after { transform: scaleX(1); }
 
 /* ---------- hero ---------- */
-.hero { position: relative; padding: 84px 0 0; text-align: center; }
+.hero { position: relative; padding: 84px 0 76px; text-align: center; }
 .hero h1 { margin: 0; font-size: clamp(54px, 9vw, 112px); line-height: .95; letter-spacing: -.065em; font-weight: 800; }
 .swash { position: relative; display: inline-block; z-index: 0; }
 .swash-line { position: absolute; z-index: -1; left: -2%; bottom: -2px; width: 104%; height: .42em; }
@@ -512,91 +512,38 @@ li:nth-child(even) > .mini-card:hover, .game-card:nth-child(even):hover { transf
 .press-play svg { position: absolute; inset: 0; width: 100%; height: 100%; }
 /* the ring is centred at (60, 60) of a 124 box */
 .press-play-text { transform-origin: 48.4% 48.4%; animation: spin 16s linear infinite; will-change: transform; }
-.orbit {
-  position: absolute; right: 3%; top: 92px;
-  width: 116px; height: 116px;
-  border: 2px dashed #a9b77a;
-  border-radius: 50%;
-  animation: spin 14s linear infinite;
-}
-.orbit::before {
-  content: '';
-  position: absolute; inset: 36px;
-  border: 2px solid var(--ink);
-  border-radius: 50%;
-  background: var(--orange);
-  box-shadow: inset -6px -5px 0 rgba(41, 42, 35, .18);
-}
-.orbit-moon { position: absolute; top: -9px; left: 50%; width: 16px; height: 16px; margin-left: -8px; border: 2px solid var(--ink); border-radius: 50%; background: var(--lime); }
 .hero-spark { position: absolute; animation: twinkle 3.5s ease-in-out infinite; }
 .hero-spark--a { left: 21%; top: 34px; }
-.hero-spark--b { right: 17%; top: 250px; width: 16px; color: var(--orange); animation-delay: -1.5s; }
 
-/* the play level */
-@keyframes jump {
-  0%, 30% { transform: translateY(0) scale(1.12, .88); }
-  38% { transform: translateY(0) scale(.92, 1.1); }
-  50% { transform: translateY(-50px) scale(1); }
-  56% { transform: translateY(-50px) scale(1); }
-  72% { transform: translateY(0) scale(.95, 1.05); }
-  80%, 100% { transform: translateY(0) scale(1); }
-}
-@keyframes jump-shadow {
-  0%, 38%, 80%, 100% { transform: scaleX(1); opacity: .2; }
-  50%, 56% { transform: scaleX(.55); opacity: .1; }
-}
-@keyframes bonk { 0%, 48%, 64%, 100% { transform: translateY(0); } 54% { transform: translateY(-9px) rotate(-4deg); } }
-@keyframes coin-pop {
-  0%, 50% { opacity: 0; transform: translateY(0) scaleX(1); }
-  56% { opacity: 1; }
-  66% { transform: translateY(-46px) scaleX(-1); }
-  76% { opacity: 1; transform: translateY(-58px) scaleX(1); }
-  86%, 100% { opacity: 0; transform: translateY(-62px) scaleX(-1); }
-}
-@keyframes plus-pop {
-  0%, 54% { opacity: 0; transform: translateY(0) scale(.6); }
-  64% { opacity: 1; transform: translateY(-38px) scale(1.1); }
-  84% { opacity: 1; transform: translateY(-48px) scale(1); }
-  94%, 100% { opacity: 0; transform: translateY(-54px) scale(1); }
-}
-@keyframes coin-spin { 0%, 100% { transform: scaleX(1); } 50% { transform: scaleX(.15); } }
-.level { position: relative; height: 150px; margin-top: 12px; }
-.level-ground { position: absolute; left: 0; bottom: 6px; width: 100%; height: 12px; }
-.level-stage { position: absolute; left: 22%; bottom: 12px; width: 60px; height: 140px; }
-.power-block { position: absolute; left: 10px; top: 0; width: 40px; height: 40px; animation: bonk 2s ease-out infinite; }
-.power-block svg { display: block; width: 100%; height: 100%; }
-.level-jumper { position: absolute; left: 9px; bottom: 0; width: 42px; height: 42px; transform-origin: 50% 100%; animation: jump 2s cubic-bezier(.3, .7, .4, 1) infinite; }
-.level-pip { display: block; width: 100%; height: 100%; }
-.level-shadow { position: absolute; left: 12px; bottom: -4px; width: 36px; height: 7px; border-radius: 50%; background: var(--ink); opacity: .2; animation: jump-shadow 2s ease-in-out infinite; }
-.pop-coin, .level-coin {
-  position: absolute;
-  width: 22px; height: 22px;
-  border: 2px solid var(--ink);
+/* googly eyes: the "oo" of each "Good" */
+@keyframes lid { 0%, 93%, 100% { transform: scaleY(0); } 96% { transform: scaleY(1); } }
+.face { display: inline-block; white-space: nowrap; }
+.eye {
+  position: relative;
+  display: inline-block;
+  width: .6em;
+  height: .6em;
+  margin: 0 .01em;
+  overflow: hidden;
+  border: .1em solid var(--ink);
   border-radius: 50%;
-  background: radial-gradient(circle at 38% 35%, #fff4c2 0 3px, #f5c451 4px);
+  background: var(--card);
+  transition: scale .35s var(--pop);
 }
-.pop-coin { left: 19px; top: -2px; opacity: 0; animation: coin-pop 2s ease-out infinite; }
-.pop-plus { position: absolute; left: 46px; top: 0; font: 800 18px var(--display); color: #6f8a2a; opacity: 0; animation: plus-pop 2s ease-out infinite; }
-.level-coin { animation: coin-spin 1.6s ease-in-out infinite; }
-.level-coin--a { left: 38%; bottom: 74px; }
-.level-coin--b { left: 42%; bottom: 96px; animation-delay: -.8s; }
-.level-brick { position: absolute; bottom: 12px; border: 2px solid var(--ink); border-bottom: 0; border-radius: 8px 8px 0 0; background: repeating-linear-gradient(90deg, transparent 0 18px, rgba(41, 42, 35, .25) 18px 20px), #f28b65; }
-.level-brick--a { left: 8%; width: 58px; height: 30px; }
-.level-brick--b { left: 34%; width: 80px; height: 46px; background-color: var(--sky); }
-.score {
-  position: absolute; right: 4%; top: 22px;
-  padding: 7px 12px;
-  border: 2px solid var(--ink);
-  border-radius: 8px;
+.pupil {
+  position: absolute;
+  left: 50%; top: 50%;
+  width: .2em; height: .2em;
+  margin: -.1em 0 0 -.1em;
+  border-radius: 50%;
   background: var(--ink);
-  color: var(--lime);
-  font: 500 12px var(--mono);
-  letter-spacing: .14em;
-  box-shadow: 3px 3px 0 var(--lime);
-  rotate: 3deg;
+  transform: translate(calc(var(--px, 0) * .1em), calc(var(--py, 0) * .1em));
+  transition: transform .18s ease-out;
 }
-.score b { font-weight: 500; color: var(--card); }
-.level-note { position: absolute; right: 5%; top: 72px; font-size: 21px; }
+.pupil::after { content: ''; position: absolute; top: 18%; left: 22%; width: 32%; height: 32%; border-radius: 50%; background: var(--card); }
+.eye::after { content: ''; position: absolute; inset: -1px; background: var(--ink); transform: scaleY(0); transform-origin: top; animation: lid 5s ease-in-out infinite; }
+.face--b .eye::after { animation-delay: -2.4s; }
+.face:hover .eye { scale: 1.14; }
 
 /* the Rooftop Rush card: a little deck that fans out, and a car that won't sit still */
 @keyframes car-hop {
@@ -697,7 +644,7 @@ li:nth-child(even) > .mini-card:hover, .game-card:nth-child(even):hover { transf
 .footer-bye { margin: 0; font-size: 24px; }
 
 /* continuously moving pieces get their own layers so they don't repaint the page */
-.e-pop, .orbit, .level-jumper, .level-shadow, .power-block, .pop-coin, .pop-plus, .level-coin,
+.e-pop, .pupil, .eye::after,
 .new-burst, .live-dot, .footer-peek, .marquee-track, .hero-spark, .footer-spark, .faq-pip, .how-pip { will-change: transform; }
 
 /* ---------- responsive ---------- */
@@ -720,19 +667,10 @@ li:nth-child(even) > .mini-card:hover, .game-card:nth-child(even):hover { transf
   .nav { height: auto; flex-wrap: wrap; gap: 10px 16px; padding: 12px 0; }
   .nav nav { order: 3; width: 100%; margin: 0; gap: 0; justify-content: space-between; }
   .nav .btn--small { margin-left: auto; }
-  .hero { padding: 100px 0 0; }
+  .hero { padding: 100px 0 56px; }
   .lead { font-size: 16px; }
   .lead br { display: none; }
   .press-play { width: 70px; left: 0; top: 16px; }
-  .orbit { width: 64px; height: 64px; right: 4px; top: 20px; }
-  .orbit::before { inset: 18px; }
-  .orbit-moon { width: 12px; height: 12px; margin-left: -6px; top: -7px; }
-  .hero-spark--b { top: 300px; right: 2%; }
-  .level { height: 150px; margin-top: 26px; }
-  .level-stage { left: 14%; }
-  .level-brick--b, .level-coin--b, .level-note { display: none; }
-  .level-coin--a { left: 52%; bottom: 40px; }
-  .score { top: 30px; }
   .notebook { padding: 28px 18px 16px 48px; }
   .notebook::before { left: 10px; }
   .footer-peek { left: 8%; width: 48px; height: 48px; }
