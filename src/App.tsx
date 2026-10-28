@@ -3,7 +3,7 @@ import {
   SITE, gameAddress, gameCover, gameHref, gameTitle, indieCover, indieHost, indieHref, isHangout,
   useChallenge, useCountdown, useGames, useIndie, useTournament, type Game,
 } from './api';
-import { Cover, Pip, Sparkle, Squiggle } from './components/Art';
+import { Cover, DanfoRoad, Pip, PressPlay, Sparkle, Squiggle } from './components/Art';
 
 const categories = [
   { slug: 'endless-runners', name: 'Endless runners', count: 38 },
@@ -67,23 +67,22 @@ function NavBar() {
   );
 }
 
-function Hero({ games }: { games: Game[] }) {
-  const floaters = byPlays(games).filter((g) => gameCover(g)).slice(0, 4);
+function Hero() {
   return (
     <section className="hero">
-      <div className="hero-floaters" aria-hidden="true">
-        {floaters.map((g, i) => (
-          <div key={g.name} className={`floater floater--${i + 1}`}><Cover name={g.name} src={gameCover(g)} /></div>
-        ))}
+      <div className="hero-doodles" aria-hidden="true">
+        <PressPlay />
+        <div className="orbit"><span className="orbit-moon" /></div>
         <Sparkle className="hero-spark hero-spark--a" />
         <Sparkle className="hero-spark hero-spark--b" />
       </div>
       <p className="kicker">Big imagination. Played everywhere.</p>
-      <h1>
-        Good vibes.<br />
-        <span className="swash">Good games.
-          <svg className="swash-line" viewBox="0 0 420 34" preserveAspectRatio="none" aria-hidden="true"><path d="M6 22 C90 8 180 30 260 16 S380 10 414 18" fill="none" stroke="#d8fd71" strokeWidth="16" strokeLinecap="round" /></svg>
-          <Pip mood="wink" className="hero-pip" />
+      <h1 aria-label="Good vibes. Good games.">
+        <span aria-hidden="true">
+          Good vib<span className="e-pop e-pop--a">e</span>s.<br />
+          <span className="swash">Good gam<span className="e-pop e-pop--b">e</span>s.
+            <svg className="swash-line" viewBox="0 0 420 34" preserveAspectRatio="none"><path d="M6 22 C90 8 180 30 260 16 S380 10 414 18" fill="none" stroke="#d8fd71" strokeWidth="16" strokeLinecap="round" /></svg>
+          </span>
         </span>
       </h1>
       <p className="lead">
@@ -96,6 +95,7 @@ function Hero({ games }: { games: Game[] }) {
         <a className="btn btn--paper" href={SITE}>Create free account</a>
       </div>
       <p className="handnote hero-note">psst… every game is free <span aria-hidden="true">↺</span></p>
+      <DanfoRoad />
     </section>
   );
 }
@@ -289,17 +289,28 @@ function HowItWorks() {
   );
 }
 
+const naijaStickers = ['🚌 danfo rush hour', '🍛 jollof catching', '🛍️ Lagos markets', '🌍 games from across Africa'];
+
 function About() {
   return (
     <section id="about" className="about">
       <div className="about-copy" data-reveal>
-        <h2>About start.ng<span className="dot">.</span></h2>
-        <p>start.ng is Nigeria's home for browser games, built by the HNG community. Every game is free to play in your browser with no download, and many are made in Naija: danfo rush hour, jollof catching, Lagos markets and more.</p>
-        <p>We're also building a home for web games from across Africa. If you make games anywhere on the continent, you can put yours on start.ng for free.</p>
-        <p><a className="link-arrow" href={`${SITE}/about`}>More about start.ng <span aria-hidden="true">→</span></a></p>
+        <div className="notebook">
+          <span className="tape tape--notebook" aria-hidden="true" />
+          <h2>About start.ng<span className="dot">.</span></h2>
+          <p>start.ng is Nigeria's home for browser games, built by the HNG community. Every game is free to play in your browser with no download, and many are made in Naija: danfo rush hour, jollof catching, Lagos markets and more.</p>
+          <p>We're also building a home for web games from across Africa. If you make games anywhere on the continent, you can put yours on start.ng for free.</p>
+          <p><a className="link-arrow" href={`${SITE}/about`}>More about start.ng <span aria-hidden="true">→</span></a></p>
+        </div>
+        <ul className="naija-stickers" aria-hidden="true">
+          {naijaStickers.map((label) => <li key={label}>{label}</li>)}
+        </ul>
       </div>
       <div className="faq" data-reveal>
-        <h3>Questions <Pip mood="wow" className="faq-pip" /></h3>
+        <div className="faq-head">
+          <h3>Questions <Pip mood="wow" className="faq-pip" /></h3>
+          <p className="handnote">ask away ↓</p>
+        </div>
         {faqs.map(([q, a]) => (
           <details key={q}><summary>{q}<i aria-hidden="true">+</i></summary><p>{a}</p></details>
         ))}
@@ -308,13 +319,27 @@ function About() {
   );
 }
 
+const marquee = ['Good vibes', 'Good games', 'Free to play', 'Made in Naija', 'No downloads', 'Built by the community'];
+
 function Footer() {
   return (
     <footer className="site-footer">
-      <svg className="footer-wave" viewBox="0 0 1440 48" preserveAspectRatio="none" aria-hidden="true">
-        <path d="M0 48V22C120 2 240 2 360 20S600 44 720 26 960 0 1080 16 1320 42 1440 20V48Z" />
-      </svg>
+      <div className="footer-top" aria-hidden="true">
+        <Pip mood="happy" className="footer-peek" />
+        <svg className="footer-wave" viewBox="0 0 1440 48" preserveAspectRatio="none">
+          <path d="M0 48V22C120 2 240 2 360 20S600 44 720 26 960 0 1080 16 1320 42 1440 20V48Z" />
+        </svg>
+      </div>
       <div className="footer-body">
+        <div className="marquee" aria-hidden="true">
+          <div className="marquee-track">
+            {[0, 1].map((copy) => (
+              <span key={copy}>{marquee.map((m) => <span key={m}>{m}<Sparkle className="marquee-star" /></span>)}</span>
+            ))}
+          </div>
+        </div>
+        <Sparkle className="footer-spark footer-spark--a" />
+        <Sparkle className="footer-spark footer-spark--b" />
         <div className="container footer-grid">
           <div className="footer-brand">
             <a className="logo logo--light" href={SITE}><Pip mood="happy" className="logo-pip" /><b>start<span>.ng</span></b></a>
@@ -345,7 +370,7 @@ function Footer() {
         </div>
         <div className="container footer-base">
           <p>© 2026 start.ng · Games from Nigeria and across Africa.</p>
-          <p className="footer-bye"><span className="handnote handnote--light">come back soon!</span><Pip mood="wink" className="footer-pip" /></p>
+          <p className="handnote handnote--light footer-bye">come back soon! <span aria-hidden="true">👋</span></p>
         </div>
       </div>
     </footer>
@@ -360,7 +385,7 @@ export default function App() {
       <NavBar />
       <main>
         <div className="container">
-          <Hero games={games} />
+          <Hero />
           <TournamentBanner />
           <ChallengeBanner />
           <Categories />

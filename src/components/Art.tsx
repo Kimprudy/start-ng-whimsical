@@ -122,3 +122,71 @@ export function Sparkle({ className = '' }: { className?: string }) {
     </svg>
   );
 }
+
+// Spinning "press play" badge around the start.ng play mark.
+export function PressPlay() {
+  return (
+    <svg className="press-play" viewBox="0 0 124 124">
+      <defs><path id="press-play-ring" d="M60 60m-46 0a46 46 0 1 1 92 0a46 46 0 1 1-92 0" /></defs>
+      <circle cx="64" cy="64" r="57" fill="#292a23" />
+      <circle cx="60" cy="60" r="57" fill="#fffefa" stroke="#292a23" strokeWidth="2.5" />
+      <g className="press-play-text">
+        <text fontFamily="DM Mono, monospace" fontSize="12.5" letterSpacing="3.4" fill="#292a23">
+          <textPath href="#press-play-ring">PRESS PLAY ✦ PRESS PLAY ✦ PRESS PLAY ✦</textPath>
+        </text>
+      </g>
+      <circle cx="60" cy="60" r="27" fill="#d8fd71" stroke="#292a23" strokeWidth="2.5" />
+      <path d="M53 47v26c0 1.6 1.7 2.5 3 1.7l19-13c1.2-.8 1.2-2.6 0-3.4l-19-13c-1.3-.8-3 .1-3 1.7z" fill="#292a23" />
+    </svg>
+  );
+}
+
+function Wheel({ x }: { x: number }) {
+  return (
+    <g transform={`translate(${x} 78)`}>
+      <circle r="13" fill="#292a23" />
+      <g className="wheel-spin">
+        <circle r="6.5" fill="#fffefa" />
+        <path d="M0-6.5V6.5M-6.5 0H6.5" stroke="#292a23" strokeWidth="2" />
+      </g>
+    </g>
+  );
+}
+
+// A yellow Lagos danfo, Pip riding up top, puttering along a dotted road.
+export function DanfoRoad() {
+  return (
+    <div className="road" aria-hidden="true">
+      <div className="bus-stop">
+        <span className="bus-stop-sign">BUS STOP</span>
+        <span className="bus-stop-pole" />
+        <span className="handnote bus-stop-note">next stop: fun!</span>
+      </div>
+      <div className="danfo-track">
+        <div className="danfo">
+          <Pip mood="happy" className="danfo-pip" />
+          <svg className="danfo-bus" viewBox="0 0 190 96">
+            <g className="danfo-body">
+              <path d="M10 26c0-9 6-15 15-15h112c9 0 15 4 20 12l20 26c3 4 4 7 4 11v13c0 5-3 8-8 8H18c-5 0-8-3-8-8Z" fill="#f5c451" stroke="#292a23" strokeWidth="3" strokeLinejoin="round" />
+              <path d="M12 56h168M12 64h169" stroke="#292a23" strokeWidth="3.5" />
+              <rect x="22" y="20" width="26" height="22" rx="4" fill="#fffefa" stroke="#292a23" strokeWidth="2.5" />
+              <rect x="54" y="20" width="26" height="22" rx="4" fill="#fffefa" stroke="#292a23" strokeWidth="2.5" />
+              <rect x="86" y="20" width="26" height="22" rx="4" fill="#fffefa" stroke="#292a23" strokeWidth="2.5" />
+              <path d="M120 20h18c4 0 7 2 9 5l13 17h-40Z" fill="#a9c5ef" stroke="#292a23" strokeWidth="2.5" strokeLinejoin="round" />
+              <circle cx="176" cy="60" r="4" fill="#fffefa" stroke="#292a23" strokeWidth="2" />
+              <path d="M3 64h9" stroke="#292a23" strokeWidth="3" strokeLinecap="round" />
+            </g>
+            <Wheel x={45} />
+            <Wheel x={148} />
+          </svg>
+          <span className="puff puff--1" />
+          <span className="puff puff--2" />
+          <span className="puff puff--3" />
+        </div>
+      </div>
+      <svg className="road-line" viewBox="0 0 1200 12" preserveAspectRatio="none">
+        <path d="M0 6 C200 2 400 10 600 6 S1000 2 1200 6" fill="none" stroke="#292a23" strokeWidth="2.5" strokeLinecap="round" strokeDasharray="18 12" />
+      </svg>
+    </div>
+  );
+}
