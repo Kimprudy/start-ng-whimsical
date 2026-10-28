@@ -3,7 +3,7 @@ import {
   SITE, gameAddress, gameCover, gameHref, gameTitle, indieCover, indieHost, indieHref, isHangout,
   useChallenge, useCountdown, useGames, useIndie, useTournament, type Game,
 } from './api';
-import { Cover, DanfoRoad, Pip, PressPlay, Sparkle, Squiggle } from './components/Art';
+import { Cover, Pip, PlayLevel, PressPlay, Sparkle, Squiggle } from './components/Art';
 
 const categories = [
   { slug: 'endless-runners', name: 'Endless runners', count: 38 },
@@ -95,7 +95,7 @@ function Hero() {
         <a className="btn btn--paper" href={SITE}>Create free account</a>
       </div>
       <p className="handnote hero-note">psst… every game is free <span aria-hidden="true">↺</span></p>
-      <DanfoRoad />
+      <PlayLevel />
     </section>
   );
 }
@@ -137,6 +137,8 @@ function ChallengeBanner() {
         <span className="btn">Take the challenge <span aria-hidden="true">→</span></span>
       </div>
       <div className="challenge-art" aria-hidden="true">
+        <span className="deck-card deck-card--a" />
+        <span className="deck-card deck-card--b" />
         <Cover name={challenge.game} src={challenge.cover_url} />
         <span className="target"><b>{challenge.goal_shown}</b><small>goal</small></span>
       </div>

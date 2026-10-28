@@ -24,11 +24,13 @@ export function GameCoverArt({ name }: { name: string }) {
         {[0,1,2,3].map(i=><g key={i} transform={`translate(0 ${18-i*10})`}><ellipse rx="38" ry="12" fill={accent} stroke={ink} strokeWidth="2"/><path d="M-38 0v9c0 7 17 12 38 12s38-5 38-12V0" fill={accent} stroke={ink} strokeWidth="2"/><ellipse rx="38" ry="12" fill={paper} stroke={ink} strokeWidth="2"/><circle r="6" fill={accent} stroke={ink} strokeWidth="1.5"/></g>)}
       </g>}
       {kind === 'drive' && <g transform="translate(48 66)">
-        <path d="M0 15h55M-10 27h32M190 0h35M205 13h20" stroke={ink} strokeWidth="3" strokeLinecap="round" opacity=".35"/>
-        <path d="M17 55l16-25h89l30 25 14 7v29H7V66Z" fill={accent} stroke={ink} strokeWidth="3" strokeLinejoin="round"/>
-        <path d="M43 34h39v21H29ZM89 34h29l24 21H89Z" fill={paper} stroke={ink} strokeWidth="2"/>
-        <circle cx="38" cy="91" r="13" fill={ink}/><circle cx="133" cy="91" r="13" fill={ink}/><circle cx="38" cy="91" r="5" fill={paper}/><circle cx="133" cy="91" r="5" fill={paper}/>
-        <path d="M12 74h25M144 74h12" stroke={paper} strokeWidth="4" strokeLinecap="round"/>
+        <path className="art-lines" d="M0 15h55M-10 27h32M190 0h35M205 13h20" stroke={ink} strokeWidth="3" strokeLinecap="round" opacity=".35"/>
+        <g className="art-car">
+          <path d="M17 55l16-25h89l30 25 14 7v29H7V66Z" fill={accent} stroke={ink} strokeWidth="3" strokeLinejoin="round"/>
+          <path d="M43 34h39v21H29ZM89 34h29l24 21H89Z" fill={paper} stroke={ink} strokeWidth="2"/>
+          <circle cx="38" cy="91" r="13" fill={ink}/><circle cx="133" cy="91" r="13" fill={ink}/><circle cx="38" cy="91" r="5" fill={paper}/><circle cx="133" cy="91" r="5" fill={paper}/>
+          <path d="M12 74h25M144 74h12" stroke={paper} strokeWidth="4" strokeLinecap="round"/>
+        </g>
       </g>}
       {kind === 'agent' && <g transform="translate(160 100)">
         <path d="M0-56 48-28 48 28 0 56-48 28-48-28Z" fill={accent} stroke={ink} strokeWidth="2.5"/>
@@ -123,68 +125,51 @@ export function Sparkle({ className = '' }: { className?: string }) {
   );
 }
 
-// Spinning "press play" badge around the start.ng play mark.
+// Spinning "press play" badge around the start.ng play mark. The ring of text
+// is its own element so it can spin on the GPU without repainting the SVG.
 export function PressPlay() {
   return (
-    <svg className="press-play" viewBox="0 0 124 124">
-      <defs><path id="press-play-ring" d="M60 60m-46 0a46 46 0 1 1 92 0a46 46 0 1 1-92 0" /></defs>
-      <circle cx="64" cy="64" r="57" fill="#292a23" />
-      <circle cx="60" cy="60" r="57" fill="#fffefa" stroke="#292a23" strokeWidth="2.5" />
-      <g className="press-play-text">
+    <span className="press-play">
+      <svg className="press-play-base" viewBox="0 0 124 124">
+        <circle cx="64" cy="64" r="57" fill="#292a23" />
+        <circle cx="60" cy="60" r="57" fill="#fffefa" stroke="#292a23" strokeWidth="2.5" />
+        <circle cx="60" cy="60" r="27" fill="#d8fd71" stroke="#292a23" strokeWidth="2.5" />
+        <path d="M53 47v26c0 1.6 1.7 2.5 3 1.7l19-13c1.2-.8 1.2-2.6 0-3.4l-19-13c-1.3-.8-3 .1-3 1.7z" fill="#292a23" />
+      </svg>
+      <svg className="press-play-text" viewBox="0 0 124 124">
+        <defs><path id="press-play-ring" d="M60 60m-46 0a46 46 0 1 1 92 0a46 46 0 1 1-92 0" /></defs>
         <text fontFamily="DM Mono, monospace" fontSize="12.5" letterSpacing="3.4" fill="#292a23">
           <textPath href="#press-play-ring">PRESS PLAY ✦ PRESS PLAY ✦ PRESS PLAY ✦</textPath>
         </text>
-      </g>
-      <circle cx="60" cy="60" r="27" fill="#d8fd71" stroke="#292a23" strokeWidth="2.5" />
-      <path d="M53 47v26c0 1.6 1.7 2.5 3 1.7l19-13c1.2-.8 1.2-2.6 0-3.4l-19-13c-1.3-.8-3 .1-3 1.7z" fill="#292a23" />
-    </svg>
+      </svg>
+    </span>
   );
 }
 
-function Wheel({ x }: { x: number }) {
+// A tiny platformer level: Pip jumps, bonks the power-up block, a coin pops
+// out and the score goes up, counted off the jump animation itself.
+export function PlayLevel() {
+  const [score, setScore] = useState(0);
   return (
-    <g transform={`translate(${x} 78)`}>
-      <circle r="13" fill="#292a23" />
-      <g className="wheel-spin">
-        <circle r="6.5" fill="#fffefa" />
-        <path d="M0-6.5V6.5M-6.5 0H6.5" stroke="#292a23" strokeWidth="2" />
-      </g>
-    </g>
-  );
-}
-
-// A yellow Lagos danfo, Pip riding up top, puttering along a dotted road.
-export function DanfoRoad() {
-  return (
-    <div className="road" aria-hidden="true">
-      <div className="bus-stop">
-        <span className="bus-stop-sign">BUS STOP</span>
-        <span className="bus-stop-pole" />
-        <span className="handnote bus-stop-note">next stop: fun!</span>
+    <div className="level" aria-hidden="true">
+      <div className="level-stage">
+        <span className="power-block">
+          <svg viewBox="0 0 40 40"><rect x="2" y="2" width="36" height="36" rx="7" fill="#d8fd71" stroke="#292a23" strokeWidth="3" /><path d="M15 11.5v17c0 1.2 1.3 1.9 2.3 1.3l13-8.5c.9-.6.9-2 0-2.6l-13-8.5c-1-.6-2.3.1-2.3 1.3z" fill="#292a23" /></svg>
+        </span>
+        <span className="pop-coin" />
+        <span className="pop-plus">+1</span>
+        <span className="level-jumper" onAnimationIteration={() => setScore((n) => n + 1)}>
+          <Pip mood="happy" className="level-pip" />
+        </span>
+        <span className="level-shadow" />
       </div>
-      <div className="danfo-track">
-        <div className="danfo">
-          <Pip mood="happy" className="danfo-pip" />
-          <svg className="danfo-bus" viewBox="0 0 190 96">
-            <g className="danfo-body">
-              <path d="M10 26c0-9 6-15 15-15h112c9 0 15 4 20 12l20 26c3 4 4 7 4 11v13c0 5-3 8-8 8H18c-5 0-8-3-8-8Z" fill="#f5c451" stroke="#292a23" strokeWidth="3" strokeLinejoin="round" />
-              <path d="M12 56h168M12 64h169" stroke="#292a23" strokeWidth="3.5" />
-              <rect x="22" y="20" width="26" height="22" rx="4" fill="#fffefa" stroke="#292a23" strokeWidth="2.5" />
-              <rect x="54" y="20" width="26" height="22" rx="4" fill="#fffefa" stroke="#292a23" strokeWidth="2.5" />
-              <rect x="86" y="20" width="26" height="22" rx="4" fill="#fffefa" stroke="#292a23" strokeWidth="2.5" />
-              <path d="M120 20h18c4 0 7 2 9 5l13 17h-40Z" fill="#a9c5ef" stroke="#292a23" strokeWidth="2.5" strokeLinejoin="round" />
-              <circle cx="176" cy="60" r="4" fill="#fffefa" stroke="#292a23" strokeWidth="2" />
-              <path d="M3 64h9" stroke="#292a23" strokeWidth="3" strokeLinecap="round" />
-            </g>
-            <Wheel x={45} />
-            <Wheel x={148} />
-          </svg>
-          <span className="puff puff--1" />
-          <span className="puff puff--2" />
-          <span className="puff puff--3" />
-        </div>
-      </div>
-      <svg className="road-line" viewBox="0 0 1200 12" preserveAspectRatio="none">
+      <span className="level-brick level-brick--a" />
+      <span className="level-brick level-brick--b" />
+      <span className="level-coin level-coin--a" />
+      <span className="level-coin level-coin--b" />
+      <span className="score">SCORE <b>{String(score).padStart(4, '0')}</b></span>
+      <span className="handnote level-note">every jump counts!</span>
+      <svg className="level-ground" viewBox="0 0 1200 12" preserveAspectRatio="none">
         <path d="M0 6 C200 2 400 10 600 6 S1000 2 1200 6" fill="none" stroke="#292a23" strokeWidth="2.5" strokeLinecap="round" strokeDasharray="18 12" />
       </svg>
     </div>
