@@ -1,3 +1,6 @@
+// vite injects CSS
+// @ts-ignore
+import './styles.css';
 import { StrictMode, useState, useEffect } from 'react';
 import { createRoot } from 'react-dom/client';
 
