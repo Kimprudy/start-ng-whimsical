@@ -23,91 +23,403 @@
   --accent-orange-light:#ff8f6b;
   --accent-teal:#38bdf8;
   --accent-teal-light:#67e8f9;
+  --bubble-blue:#88d4fd;
+  --bubble-orange:#ffb38f;
+  --bubble-teal:#a7f3d0;
+  --bubble-pink:#ffc8e8;
 }
 
-/* Whimsical floating elements */
+/* ============ Whimsical decorative elements ============ */
+
 @keyframes float {
   0%, 100% { transform: translateY(0) translateX(0); }
-  50% { transform: translateY(-20px) translateX(15px); }
+  50% { transform: translateY(-25px) translateX(20px); }
 }
 
 @keyframes float-slow {
   0%, 100% { transform: translateY(0) translateX(0); }
-  50% { transform: translateY(-30px) translateX(-15px); }
+  50% { transform: translateY(-40px) translateX(-20px); }
 }
 
 @keyframes float-tiny {
   0%, 100% { transform: translateY(0) translateX(0); }
-  50% { transform: translateY(-10px) translateX(5px); }
+  50% { transform: translateY(-15px) translateX(8px); }
 }
 
-@keyframes pulse-slow {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.5; }
+@keyframes float-extra-slow {
+  0%, 100% { transform: translateY(0) translateX(0); }
+  50% { transform: translateY(-50px) translateX(30px); }
 }
 
-@keyframes spin-slow {
-  from { transform: rotate(0deg); }
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.6; transform: scale(1.1); }
+}
+
+@keyframes spin {
   to { transform: rotate(360deg); }
 }
 
-.bubble {
-  position: absolute;
-  border-radius: 50%;
-  pointer-events: none;
-  filter: opacity(0.8);
-  animation: float 6s ease-in-out infinite;
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
 }
 
-.bubble-small {
-  width: 20px;
-  height: 20px;
-  animation-duration: 8s;
+@keyframes pop-in {
+  0% { opacity: 0; transform: scale(0.8) translateY(10px); }
+  100% { opacity: 1; transform: scale(1) translateY(0); }
 }
 
-.bubble-medium {
-  width: 35px;
-  height: 35px;
-  animation-duration: 7s;
+@keyframes fade-in-up {
+  0% { opacity: 0; transform: translateY(20px); }
+  100% { opacity: 1; transform: translateY(0); }
 }
 
-.bubble-large {
-  width: 50px;
-  height: 50px;
-  animation-duration: 5s;
+@keyframes fade-in {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+
+@keyframes subtle-scale {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+/* Layered floating bubbles - multiple sizes and colours */
+.bubble-layer-1 {
+  animation: float 8s ease-in-out infinite;
+}
+
+.bubble-layer-2 {
+  animation: float-slow 12s ease-in-out infinite;
+}
+
+.bubble-layer-3 {
+  animation: float-tiny 10s ease-in-out infinite;
+}
+
+.bubble-layer-4 {
+  animation: float-extra-slow 15s ease-in-out infinite;
+}
+
+/* Bubble size classes */
+.bubble-extra-xsmall {
+  width: 6px;
+  height: 6px;
 }
 
 .bubble-xsmall {
   width: 10px;
   height: 10px;
-  animation-duration: 10s;
 }
 
-/* Different colors for bubbles */
-.bubble-blue { background: var(--blue-pale); }
-.bubble-orange { background: var(--accent-orange-light); }
-.bubble-teal { background: var(--accent-teal-light); }
-.bubble-purple { background: #e8d4fc; }
-.bubble-pink { background: #fbcfe8; }
+.bubble-small {
+  width: 18px;
+  height: 18px;
+}
 
+.bubble-medium {
+  width: 30px;
+  height: 30px;
+}
+
+.bubble-large {
+  width: 45px;
+  height: 45px;
+}
+
+.bubble-extra-large {
+  width: 65px;
+  height: 65px;
+}
+
+/* Bubble colour classes using CSS variables */
+.bubble-bg-1 { background: var(--bubble-blue); }
+.bubble-bg-2 { background: var(--bubble-orange); }
+.bubble-bg-3 { background: var(--bubble-teal); }
+.bubble-bg-4 { background: var(--bubble-pink); }
+.bubble-bg-5 { background: var(--blue-pale); }
+.bubble-bg-6 { background: var(--accent-orange-light); }
+.bubble-bg-7 { background: var(--accent-teal-light); }
+
+/* Sparkle elements */
 .sparkle {
   position: absolute;
-  width: 8px;
-  height: 8px;
+  width: 6px;
+  height: 6px;
   background: white;
   border-radius: 50%;
   pointer-events: none;
-  animation: pulse-slow 4s ease-in-out infinite;
+  animation: pulse 5s ease-in-out infinite;
 }
 
-/* Reduced motion - disable animations */
+/* Decorative cloud shapes */
+.cloud {
+  position: absolute;
+  border-radius: 50px 50px 20px 20px;
+  background: rgba(255, 255, 255, 0.3);
+  pointer-events: none;
+}
+
+/* Organic blob shapes */
+.blob {
+  position: absolute;
+  border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+  filter: opacity(0.6);
+  pointer-events: none;
+}
+
+/* Decorative path / dotted line */
+.path-decoration {
+  position: absolute;
+  background: repeating-linear-gradient(
+    90deg,
+    var(--line),
+    var(--line),
+    10px,
+    20px
+  );
+  height: 2px;
+  pointer-events: none;
+}
+
+/* Button hover effects */
+.btn {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.2s ease;
+}
+
+.btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+  transition: left 0.5s ease;
+}
+
+.btn:hover::before {
+  left: 100%;
+}
+
+.btn:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 8px 20px rgba(36, 101, 216, 0.3);
+}
+
+.btn:focus-visible {
+  outline: 2px solid var(--blue);
+  outline-offset: 2px;
+}
+
+.btn:focus-visible::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 24px;
+  height: 24px;
+  margin: -12px 0 0 -12px;
+  border: 2px solid var(--blue);
+  border-radius: 50%;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+/* Game card hover effects */
+.game-card {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border-radius: 12px;
+  background: var(--surface);
+}
+
+.game-card:hover {
+  transform: translateY(-4px) scale(1.02);
+  box-shadow: 0 20px 40px rgba(36, 101, 216, 0.15), 0 0 0 1px var(--line);
+}
+
+.game-card:focus-visible {
+  outline: 2px solid var(--blue);
+  outline-offset: 2px;
+}
+
+.game-card:hover .game-card-title {
+  color: var(--blue);
+}
+
+/* Hero section specific */
+.hero {
+  position: relative;
+  min-height: 60vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+/* Cloud decorations in hero */
+.hero .cloud {
+  position: absolute;
+  width: 100px;
+  height: 40px;
+  background: rgba(255, 255, 255, 0.4);
+  border-radius: 50px 50px 20px 20px;
+  animation: float-slow 20s ease-in-out infinite;
+}
+
+/* Star decorations */
+.star {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background: var(--bubble-blue);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.star::after {
+  content: '';
+  position: absolute;
+  left: -4px;
+  top: 0;
+  width: 4px;
+  height: 4px;
+  background: var(--bubble-pink);
+  border-radius: 50%;
+}
+
+/* Floating decorative elements container */
+.floating-decor {
+  position: absolute;
+  pointer-events: none;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* About section decorative elements */
+.about .floating-decor .blob {
+  animation: float 15s ease-in-out infinite;
+}
+
+/* Footer decorative elements */
+.site-footer {
+  border-top: 1px solid var(--line);
+}
+
+/* Section dividers */
+.section-divider {
+  width: 40px;
+  height: 2px;
+  background: linear-gradient(90deg, var(--accent-orange), var(--accent-teal));
+  margin: 2rem auto;
+  border-radius: 2px;
+}
+
+/* Reduced motion */
 @media (prefers-reduced-motion: reduce) {
   .bubble,
-  .sparkle {
+  .sparkle,
+  .cloud,
+  .blob {
     animation: none !important;
     transition: none !important;
   }
+  
+  .btn:hover {
+    transform: none;
+    box-shadow: none;
+  }
+  
+  .game-card:hover {
+    transform: none;
+    box-shadow: none;
+  }
+  
+  .path-decoration {
+    background: var(--line);
+  }
 }
+
+/* Reduced motion - subtle only */
+@media (prefers-reduced-motion: reduce) and (hover:hover) {
+  .btn {
+    transition: none;
+  }
+}
+
+/* ============ Page structure ============ */
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.container.narrow {
+  max-width: 900px;
+}
+
+.section-head {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.section-head h2 {
+  font-size: 2rem;
+  font-weight: 600;
+  color: var(--ink);
+  margin-bottom: 0.5rem;
+  position: relative;
+  display: inline-block;
+}
+
+.section-head h2::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 40px;
+  height: 3px;
+  background: var(--line);
+  border-radius: 2px;
+}
+
+.eyebrow {
+  font-size: 0.85rem;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 1rem;
+  display: block;
+}
+
+.lead {
+  font-size: 1.15rem;
+  color: var(--muted);
+  line-height: 1.8;
+  max-width: 600px;
+  margin: 0 auto 2rem;
+}
+
+/* Games grid */
+.games-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+/* ============ Responsive ============ */
 
 @media (max-width: 1100px) {
   .main-column { margin-left: 0; }
@@ -153,4 +465,51 @@
   .metric-label { font-size: 7px; }
   .metric-value { font-size: 17px; }
   .metric-note { font-size: 7px; }
+}
+
+/* Ensuring no horizontal overflow */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  overflow-x: hidden;
+}
+
+/* Focus visible improvements */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible {
+  outline: 2px solid var(--blue);
+  outline-offset: 2px;
+}
+
+/* Link hover styles */
+a:hover {
+  color: var(--blue);
+}
+
+/* Image handling */
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Reduced motion media query button override */
+@media (prefers-reduced-motion: reduce) {
+  .bubble,
+  .sparkle,
+  .cloud,
+  .blob {
+    animation: none !important;
+    transition: none !important;
+  }
+  
+  .game-card:hover {
+    transform: var(--no-hover-transform, none);
+  }
+  
+  .btn:hover {
+    transform: var(--no-btn-hover-transform, none);
+  }
 }
