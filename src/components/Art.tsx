@@ -145,3 +145,38 @@ export function PressPlay() {
     </span>
   );
 }
+
+// A Whot card (the Naija card game), face up. Hover turns it over to a
+// start.ng card back.
+export function WhotCard() {
+  const star = 'M50.0 37.0L56.8 54.7L75.7 55.7L60.9 67.6L65.9 85.8L50.0 75.5L34.1 85.8L39.1 67.6L24.3 55.7L43.2 54.7Z';
+  const pip = 'M17.0 33.0L18.8 37.6L23.7 37.8L19.9 40.9L21.1 45.7L17.0 43.0L12.9 45.7L14.1 40.9L10.3 37.8L15.2 37.6Z';
+  return (
+    <span className="whot">
+      <span className="whot-inner">
+        <svg className="whot-face" viewBox="0 0 100 140">
+          <rect x="2" y="2" width="96" height="136" rx="10" fill="#fffefa" stroke="#292a23" strokeWidth="3" />
+          <text x="17" y="26" textAnchor="middle" fontFamily="Manrope, sans-serif" fontWeight="800" fontSize="17" fill="#292a23">20</text>
+          <path d={pip} fill="#f28b65" stroke="#292a23" strokeWidth="1.5" strokeLinejoin="round" />
+          <g transform="rotate(180 50 70)">
+            <text x="17" y="26" textAnchor="middle" fontFamily="Manrope, sans-serif" fontWeight="800" fontSize="17" fill="#292a23">20</text>
+            <path d={pip} fill="#f28b65" stroke="#292a23" strokeWidth="1.5" strokeLinejoin="round" />
+          </g>
+          <path d={star} fill="#f28b65" stroke="#292a23" strokeWidth="3" strokeLinejoin="round" />
+          <text x="50" y="106" textAnchor="middle" fontFamily="Manrope, sans-serif" fontWeight="800" fontSize="12" letterSpacing="1" fill="#292a23">WHOT</text>
+        </svg>
+        <svg className="whot-back" viewBox="0 0 100 140">
+          <defs>
+            <pattern id="whot-dots" width="12" height="12" patternUnits="userSpaceOnUse">
+              <circle cx="6" cy="6" r="1.6" fill="#292a23" opacity=".35" />
+            </pattern>
+          </defs>
+          <rect x="2" y="2" width="96" height="136" rx="10" fill="#d8fd71" stroke="#292a23" strokeWidth="3" />
+          <rect x="9" y="9" width="82" height="122" rx="6" fill="url(#whot-dots)" stroke="#292a23" strokeWidth="1.5" strokeDasharray="4 4" />
+          <rect x="31" y="51" width="38" height="38" rx="9" fill="#292a23" />
+          <path d="M45 60v20c0 1.2 1.3 1.9 2.3 1.3l14-10c.9-.6.9-2 0-2.6l-14-10c-1-.6-2.3.1-2.3 1.3z" fill="#d8fd71" />
+        </svg>
+      </span>
+    </span>
+  );
+}

@@ -490,12 +490,7 @@ li:nth-child(even) > .mini-card:hover, .game-card:nth-child(even):hover { transf
   0%, 100% { transform: rotate(-9deg) translateY(0); }
   50% { transform: rotate(9deg) translateY(-.07em) scale(1.06); }
 }
-@keyframes e-flip {
-  0% { transform: rotate(0) translateY(0); }
-  40% { transform: rotate(200deg) translateY(-.3em) scale(1.15); }
-  100% { transform: rotate(360deg) translateY(0); }
-}
-/* the "e" in vibes and games: chunky sticker letters that sway, and flip when poked */
+/* the "e" in vibes and games: chunky sticker letters that sway */
 .e-pop {
   display: inline-block;
   color: var(--lime);
@@ -506,7 +501,6 @@ li:nth-child(even) > .mini-card:hover, .game-card:nth-child(even):hover { transf
   animation: e-dance 2.6s ease-in-out infinite;
 }
 .e-pop--b { color: var(--orange); animation-delay: -1.3s; }
-.e-pop:hover { animation: e-flip .8s var(--pop); }
 .hero-doodles { position: absolute; inset: 0; pointer-events: none; }
 .press-play { position: absolute; left: 1%; top: 74px; width: 120px; aspect-ratio: 1; rotate: -8deg; }
 .press-play svg { position: absolute; inset: 0; width: 100%; height: 100%; }
@@ -515,35 +509,14 @@ li:nth-child(even) > .mini-card:hover, .game-card:nth-child(even):hover { transf
 .hero-spark { position: absolute; animation: twinkle 3.5s ease-in-out infinite; }
 .hero-spark--a { left: 21%; top: 34px; }
 
-/* googly eyes: the "oo" of each "Good" */
-@keyframes lid { 0%, 93%, 100% { transform: scaleY(0); } 96% { transform: scaleY(1); } }
-.face { display: inline-block; white-space: nowrap; }
-.eye {
-  position: relative;
-  display: inline-block;
-  width: .6em;
-  height: .6em;
-  margin: 0 .01em;
-  overflow: hidden;
-  border: .1em solid var(--ink);
-  border-radius: 50%;
-  background: var(--card);
-  transition: scale .35s var(--pop);
-}
-.pupil {
-  position: absolute;
-  left: 50%; top: 50%;
-  width: .2em; height: .2em;
-  margin: -.1em 0 0 -.1em;
-  border-radius: 50%;
-  background: var(--ink);
-  transform: translate(calc(var(--px, 0) * .1em), calc(var(--py, 0) * .1em));
-  transition: transform .18s ease-out;
-}
-.pupil::after { content: ''; position: absolute; top: 18%; left: 22%; width: 32%; height: 32%; border-radius: 50%; background: var(--card); }
-.eye::after { content: ''; position: absolute; inset: -1px; background: var(--ink); transform: scaleY(0); transform-origin: top; animation: lid 5s ease-in-out infinite; }
-.face--b .eye::after { animation-delay: -2.4s; }
-.face:hover .eye { scale: 1.14; }
+/* the Whot card: floats on the right, turns over on hover */
+@keyframes card-float { 0%, 100% { transform: translateY(0) rotate(9deg); } 50% { transform: translateY(-8px) rotate(6deg); } }
+.whot { position: absolute; right: 3%; top: 64px; width: 112px; aspect-ratio: 5 / 7; perspective: 700px; pointer-events: auto; animation: card-float 5s ease-in-out infinite; will-change: transform; }
+/* no filter here: a filter would flatten the 3D turn, so each face carries its own shadow */
+.whot-inner { position: relative; display: block; width: 100%; height: 100%; transform-style: preserve-3d; transition: transform .8s var(--pop); }
+.whot:hover .whot-inner { transform: rotateY(180deg); }
+.whot svg { position: absolute; inset: 0; width: 100%; height: 100%; backface-visibility: hidden; filter: drop-shadow(4px 5px 0 rgba(41, 42, 35, .9)); }
+.whot-back { transform: rotateY(180deg); }
 
 /* the Rooftop Rush card: a little deck that fans out, and a car that won't sit still */
 @keyframes car-hop {
@@ -644,7 +617,7 @@ li:nth-child(even) > .mini-card:hover, .game-card:nth-child(even):hover { transf
 .footer-bye { margin: 0; font-size: 24px; }
 
 /* continuously moving pieces get their own layers so they don't repaint the page */
-.e-pop, .pupil, .eye::after,
+.e-pop,
 .new-burst, .live-dot, .footer-peek, .marquee-track, .hero-spark, .footer-spark, .faq-pip, .how-pip { will-change: transform; }
 
 /* ---------- responsive ---------- */
@@ -671,6 +644,8 @@ li:nth-child(even) > .mini-card:hover, .game-card:nth-child(even):hover { transf
   .lead { font-size: 16px; }
   .lead br { display: none; }
   .press-play { width: 70px; left: 0; top: 16px; }
+  .whot { width: 54px; right: 4px; top: 12px; }
+  .whot svg { filter: drop-shadow(2px 3px 0 rgba(41, 42, 35, .9)); }
   .notebook { padding: 28px 18px 16px 48px; }
   .notebook::before { left: 10px; }
   .footer-peek { left: 8%; width: 48px; height: 48px; }
